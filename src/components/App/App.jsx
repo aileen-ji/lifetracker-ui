@@ -14,11 +14,9 @@ import AccessForbidden from "components/AccessForbidden/AccessForbidden";
 import NutritionPage from "components/NutritionPage/NutritionPage";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [appState, setAppState] = useState({})
   const [user, setUser] = useState({})
   const [error, setError] = useState()
-
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,6 +39,7 @@ export default function App() {
   const handleLogout = async () => {
     await API.logoutUser()
     setUser({})
+    setError(null)
   }
 
 
@@ -52,8 +51,8 @@ export default function App() {
             <Navbar user={user} setUser={setUser} handleLogout={handleLogout}></Navbar>
             <Routes>
               <Route path="/" element={<Landing/>}></Route>
-              <Route path="/login" element={<LoginPage user={user} setUser={setUser} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setAppState={setAppState}/>}></Route>
-              <Route path="/register" element={<RegistrationPage user={user} setUser={setUser} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setAppState={setAppState}/>}></Route>
+              <Route path="/login" element={<LoginPage user={user} setUser={setUser}/>}></Route>
+              <Route path="/register" element={<RegistrationPage user={user} setUser={setUser}/>}></Route>
               <Route path="/activity" element={user?.email ? (<ActivityPage/>) : (<AccessForbidden/>)} ></Route>
               <Route path="/nutrition/*" element={user?.email ? (<NutritionPage user={user}/>) : (<AccessForbidden/>)}></Route>
               <Route path="*" element={<NotFound/>}></Route>

@@ -35,7 +35,7 @@ export default function NutritionDetail(props) {
 
   return (
     <div className="nutrition-detail">
-        {notFound ? (<NotFound/>) : <NutritionCard id={nutrition.id} key={nutrition.name} name={nutrition.name} calories={nutrition.calories} imageUrl={nutrition.imageUrl} category={nutrition.category} createdAt={nutrition.createdAt}/>}
+        {notFound ? (<NotFound/>) : <NutritionCard quantity={nutrition.quantity} id={nutrition.id} key={nutrition.name} name={nutrition.name} calories={nutrition.calories} imageUrl={nutrition.imageUrl} category={nutrition.category} createdAt={nutrition.createdAt}/>}
     </div>
   )
 }

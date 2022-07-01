@@ -35,7 +35,7 @@ export default function NutritionFeed(props) {
         {nutrition.length ? null : (<p className="empty-message">Nothing here yet..</p>)}
         {nutrition.map((item) => {return(
             <Link to={`id/`+item.id}>
-                <NutritionCard key={item.name} name={item.name} calories={item.calories} imageUrl={item.imageUrl} category={item.category} createdAt={item.createdAt} id={item.id}/>
+                <NutritionCard key={item.name} quantity={item.quantity} name={item.name} calories={item.calories} imageUrl={item.imageUrl} category={item.category} createdAt={item.createdAt} id={item.id}/>
             </Link>
         )})}
     </div>

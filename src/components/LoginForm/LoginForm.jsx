@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import API from "../../services/apiClient"
 import "./LoginForm.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 
 export default function LoginForm(props) {
@@ -41,15 +41,14 @@ export default function LoginForm(props) {
             return
         }
         console.log(form)
-        const {data, err} = await API.loginUser({email: form.email,
+        const {data, error} = await API.loginUser({email: form.email,
                     password: form.password})
-        
-        if(err) setError((state) => ({ ...state, form: err }))
+        if(error) setError((state) => ({ ...state, form: error }))
         if (data?.user){
             props.setUser(data.user)
             API.setToken(data.token)
         }
-        console.log(data, err)
+        console.log(data, error)
         //placeholder, handled by contexts
         // try{
         //     const json = await axios.post("http://localhost:3001/auth/login", {
@@ -97,5 +96,6 @@ export default function LoginForm(props) {
                 <button className="submit-login" onClick={loginUser}>Login</button>
                 {error.form ? (<p className="error">{error.form}</p>) : null}
             </form>
+            <p>Don't have a lifetracker account? <Link to="/register">Register here</Link></p>
         </div>
     )}

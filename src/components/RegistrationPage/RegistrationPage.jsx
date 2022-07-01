@@ -5,6 +5,6 @@ import "./RegistrationPage.css"
 export default function RegistrationPage(props) {
     return (
         <div className="registration-page">
-            <RegistrationForm user={props.user} setUser={props.setUser} setIsLoggedIn={props.setIsLoggedIn} setAppState={props.setAppState}/>
+            <RegistrationForm user={props.user} setUser={props.setUser}/>
         </div>
     )}
