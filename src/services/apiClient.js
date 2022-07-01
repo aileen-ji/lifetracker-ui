@@ -15,24 +15,7 @@ class ApiClient {
     async request ({endpoint, method = `GET`, data = {}}){
         const url = `${this.remoteHostUrl}/${endpoint}`
         console.log(url)
-        // const headers = {
-        //     "Content-Type": "application/json"
-        // }
-
-        // if(this.token){
-        //     headers["Authorization"] = `Bearer ${this.token}`
-        //     try{
-        //         console.log("Authorizing")
-        //         const res = await axios({url, method, data, headers})
-                
-        //         return {data: res.data, error: null}
-        //     }catch(error){
-        //         console.log(error)
-        //         console.error({errorResponse: error.response})
-        //         const message = error?.response?.data?.error?.message
-        //         return {data: null, error: message || String(error)}
-        //     }
-        // }
+       
         const headers = {
             "Content-Type": "application/json",
             Authorization: this.token ? `Bearer ${this.token}` : "",
@@ -71,6 +54,10 @@ class ApiClient {
 
     async fetchNutritionById(nutritionId){
         return await this.request({endpoint: `nutrition/id/${nutritionId}`, method: `GET` })
+    }
+
+    async fetchUserFromToken() {
+        return await this.request({endpoint: `auth/me`, method: `GET`})
     }
 
     async logoutUser() {

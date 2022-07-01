@@ -17,22 +17,27 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [appState, setAppState] = useState({})
   const [user, setUser] = useState({})
+  const [error, setError] = useState()
 
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const { data } = await API.fetchUserFromToken()
-  //     if (data) {
-  //       setUser(data.user)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, err } = await API.fetchUserFromToken()
+      if (data) {
+        setUser(data.user)
+      }
+      if(err){
+        setError(err)
+      }
+    }
 
-  //   const token = localStorage.getItem("my_token")
-  //   if (token) {
-  //     API.setToken(token)
-  //     fetchUser()
-  //   }
-  // }, [])
+    const token = localStorage.getItem("my_token")
+    if (token) {
+      API.setToken(token)
+      fetchUser()
+    }
+  }, [])
+
   const handleLogout = async () => {
     await API.logoutUser()
     setUser({})
