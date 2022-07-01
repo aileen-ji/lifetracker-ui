@@ -1,4 +1,4 @@
-import axios from "axios"
+import API from "../../services/apiClient"
 import * as React from "react"
 import { useState } from "react"
 import "./NutritionForm.css"
@@ -20,29 +20,44 @@ export default function NutritionForm(props) {
     const handleSubmit = async (e) => {
         //placeholder
         e.preventDefault()
-        try{
-            const json = await axios.post("http://localhost:3001/nutrition", {
-                name: form.name,
-                calories: form.calories,
-                imageUrl: form.imageUrl,
-                category: form.category
-            })
-            if(json?.data?.nutrition){
-                setForm({
-                    name: "",
-                    calories: 1,
-                    imageUrl: "",
-                    category: ""
-                })
-            }
-            else{
-                setError((state) => ({ ...state, form: "Something went wrong with registration." }))
-            }
-        }catch(err) {
-            const message = err?.response?.data?.error?.message
-            setError((state) => ({ ...state, form: message ? String(message) : String(err) }))
+
+        const {data, err} = await API.createNutrition({name: form.name,
+                    calories: form.calories,
+                    imageUrl: form.imageUrl,
+                    category: form.category})
+
+        if(err) setError((state) => ({ ...state, form: err?.response?.data?.error?.message }))
+        if (data){
+            setForm({
+                            name: "",
+                            calories: 1,
+                            imageUrl: "",
+                            category: ""
+                        })
         }
-        console.log(error)
+        // try{
+        //     const json = await axios.post("http://localhost:3001/nutrition", {
+        //         name: form.name,
+        //         calories: form.calories,
+        //         imageUrl: form.imageUrl,
+        //         category: form.category
+        //     })
+        //     if(json?.data?.nutrition){
+        //         setForm({
+        //             name: "",
+        //             calories: 1,
+        //             imageUrl: "",
+        //             category: ""
+        //         })
+        //     }
+        //     else{
+        //         setError((state) => ({ ...state, form: "Something went wrong with registration." }))
+        //     }
+        // }catch(err) {
+        //     const message = err?.response?.data?.error?.message
+        //     setError((state) => ({ ...state, form: message ? String(message) : String(err) }))
+        // }
+        // console.log(error)
     }
 
   return (
